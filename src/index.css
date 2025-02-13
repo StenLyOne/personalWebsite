@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "SuisseIntl";
+  src: url("./assets/fonts/SuisseIntl-Regular.woff2") format("woff2"),
+    url("./assets/fonts/SuisseIntl-Medium.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SuisseIntl";
+  src: url("./assets/fonts/SuisseIntl-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+}
+
+:root {
+  --color-black: #131313;
+  --color-blue: #1e2eb8;
+  --color-grayTxt: #7988a3;
+  --color-stroke: #bbc6da;
+  --color-bg: #e8edf6;
+  --color-white: #ffffff;
+
+  font-family: Manrope, "open-sans";
+  /* font-family: SuisseIntl, sans-serif; */
+  background-color: var(--color-bg);
+}
+
+.color-blue {
+  color: var(--color-blue);
+}
+
+.bg-blue {
+  background-color: var(--color-blue);
+}
+
+.color-white {
+  color: var(--color-white);
+}
+
+.bg-white {
+  background-color: var(--color-white);
+}
+
+.color-bg {
+  color: var(--color-bg);
+}
+
+.bg-bg {
+  background-color: var(--color-bg);
+}
+
+body {
+  margin: 0;
+}
+
+h1 {
+  font-size: 78px;
+  line-height: 70px;
+  letter-spacing: -3.9px;
+  font-weight: 600;
+}
+
+h2 {
+  font-size: 78px;
+  line-height: 70px;
+  letter-spacing: -3.9px;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 41px;
+  line-height: 46px;
+  letter-spacing: -1.2px;
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 18px;
+  line-height: 23px;
+  letter-spacing: -2%;
+  font-weight: 500;
+}
+
+p {
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: -2%;
+  font-weight: 600;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: -2%;
+  font-weight: 500;
+}
+
+.brackets {
+  font-family: sans-serif;
+  font-size: 80px !important;
+  font-weight: 100;
+  line-height: 55px !important;
+  letter-spacing: -5% !important;
+}
+
+.card-hidden {
+  display: none;
+}
+
+.card-shadow {
+  box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.15);
+}
+
+.manrope {
+  font-family: Manrope, "open-sans";
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: -5%;
+}
