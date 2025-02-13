@@ -69,7 +69,7 @@ const Works = () => {
   const [showCard, setShowCard] = useState(null);
 
   return (
-    <div className="pr-[30px] pb-[180px] md:pt-[90px] pb-[80px]">
+    <section className="pr-[30px] pb-[180px] md:pt-[90px] pb-[80px]">
       <div>
         <p>My works</p>
       </div>
@@ -127,7 +127,7 @@ const Works = () => {
           </motion.div>
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 

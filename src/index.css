@@ -52,6 +52,30 @@
   background-color: var(--color-bg);
 }
 
+.color-grey {
+  color: var(--color-grayTxt);
+}
+
+.bg-grey {
+  background-color: var(--color-grayTxt);
+}
+
+.color-black {
+  color: var(--color-black);
+}
+
+.bg-black {
+  background-color: var(--color-black);
+}
+
+.color-stroke {
+  color: var(--color-stroke);
+}
+
+.bg-stroke {
+  background-color: var(--color-stroke);
+}
+
 body {
   margin: 0;
 }
@@ -80,14 +104,14 @@ h3 {
 h4 {
   font-size: 18px;
   line-height: 23px;
-  letter-spacing: -2%;
-  font-weight: 500;
+  letter-spacing: -0.9px;
+  font-weight: 700;
 }
 
 p {
   font-size: 14px;
   line-height: 18px;
-  letter-spacing: -2%;
+  letter-spacing: -0.7px;
   font-weight: 600;
 }
 
@@ -125,4 +149,18 @@ li {
   font-size: 14px;
   line-height: 18px;
   letter-spacing: -5%;
+}
+
+.font-12 {
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  line-height: 14px !important;
+  letter-spacing: -5% !important;
+}
+
+.font-10 {
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  line-height: 13.8px !important;
+  letter-spacing: -5% !important;
 }
