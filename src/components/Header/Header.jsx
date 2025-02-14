@@ -13,7 +13,7 @@ const Header = () => {
             <li>Services</li>
             <li>About me</li>
             <li>FAQ</li>
-            <li>Contacts</li>
+            <a href="#contact"><li>Contacts</li></a>
           </ul>
         </div>
       </div>

@@ -22,6 +22,7 @@
   --color-stroke: #bbc6da;
   --color-bg: #e8edf6;
   --color-white: #ffffff;
+  --color-red: #EB1515;
 
   font-family: Manrope, "open-sans";
   /* font-family: SuisseIntl, sans-serif; */
@@ -76,8 +77,18 @@
   background-color: var(--color-stroke);
 }
 
+.bg-red {
+  background-color: var(--color-red);
+}
+
+
+
 body {
   margin: 0;
+}
+
+button {
+  cursor: pointer;
 }
 
 h1 {
@@ -109,10 +120,10 @@ h4 {
 }
 
 p {
+  font-weight: 600; 
   font-size: 14px;
   line-height: 18px;
-  letter-spacing: -0.7px;
-  font-weight: 600;
+  letter-spacing: -0.05em; /* -5% */
 }
 
 ul {

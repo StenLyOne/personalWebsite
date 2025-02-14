@@ -6,30 +6,12 @@ import Testimonials from "./section/Testimonials/Testimonials.jsx";
 import About from "./section/About/About.jsx";
 import ContactCall from "./section/ContactCall/ContactCall.jsx";
 import FAQ from "./section/FAQ/FAQ.jsx";
-import LocomotiveScroll from "locomotive-scroll";
-import "locomotive-scroll/dist/locomotive-scroll.css";
-import { useEffect, useRef } from "react";
 import Contact from "./section/contact/Contact.jsx";
 
 function App() {
-  const containerRef = useRef(null);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    const scroll = new LocomotiveScroll({
-      el: containerRef.current,
-      smooth: true,
-      multiplier: 1.2, // Скорость прокрутки
-    });
-
-    return () => {
-      if (scroll) scroll.destroy();
-    };
-  }, []);
 
   return (
-    <div ref={containerRef} className="bg-white flex w-auto relative">
+    <div className="bg-white flex w-auto relative">
       <div className="md:w-1/5">
         <Header />
       </div>
