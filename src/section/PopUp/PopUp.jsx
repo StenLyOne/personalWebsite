@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Contact = () => {
+const PopUp = ({ close }) => {
   const [focused, setFocused] = useState({
     name: { value: "", bullet: false },
     contact: { value: "", bullet: false },
@@ -55,13 +55,23 @@ const Contact = () => {
   };
 
   return (
-    <section className="mx-[16px] md:mx-[0px] md:mr-[30px]">
-      <div className="max-w-[800px] mx-auto mt-[100px] md:mt-[180px] mb-[90px]" id="contact">
-        <h2 className="text-5xl font-bold text-start md:text-center mb-[40px] md:mb-[100px]">CONTACT</h2>
+    <section className="m-[30px] h-[100vh] w-full flex flex-col justify-end space-y-[20px]">
+      <button
+        className="color-white w-auto flex justify-end items-center gap-[8px]"
+        style={{ fontSize: "14px" }}
+        onClick={() => close()}
+      >
+        Close
+        <span>
+          <img src="src\assets\img\close.svg" alt="" />
+        </span>
+      </button>
+      <div className="flex justify-between w-full p-[40px] rounded-[10px] bg-white">
+        <h1 className="text-5xl font-bold text-center mb-[100px]">CONTACT</h1>
 
-        <div>
+        <div className="max-w-[800px] w-full">
           {/* Поля ввода */}
-          <div className="grid sm:grid-cols-2 gap-4 gap-y-[30px] sm:gap-y-[0px]">
+          <div className="grid grid-cols-2 gap-4">
             {/* Name */}
             <div className="relative">
               <label
@@ -208,39 +218,14 @@ const Contact = () => {
                       budget: { value: option },
                     }))
                   }
-                  className={`relative px-[12px] py-[6px] md:px-[10px] md:py-[4px] border rounded-full transition-all duration-200 overflow-hidden flex items-center justify-center group 
-                ${
-                  focused.budget.value === option
-                    ? "border-blue-800 text-blue-800 font-semibold"
-                    : "border-gray-300 text-black hover:border-gray-500 font-semibold"
-                }`}
+                  className={`px-[12px] py-[6px] md:px-[10px] md:py-[4px] border rounded-full transition-all duration-200 
+                  ${
+                    focused.budget.value === option
+                      ? "border-blue-800 text-blue-800 font-semibold"
+                      : "border-gray-300 text-black hover:border-gray-500 font-semibold"
+                  }`}
                 >
-                  {/* Невидимый текст для фиксации размера */}
-                  <p className="opacity-0 whitespace-nowrap">{option}</p>
-
-                  {/* Черный текст (уходит вверх при ховере) */}
-                  <span
-                    className={`absolute inset-0 flex items-center justify-center transition-transform duration-300 
-                  ${
-                    focused.budget.value === option
-                      ? "text-blue-800" // Если кнопка активна, текст сразу синий
-                      : "text-black group-hover:-translate-y-full"
-                  }`}
-                  >
-                    {option}
-                  </span>
-
-                  {/* Синий текст (поднимается снизу при ховере) */}
-                  <span
-                    className={`absolute inset-0 flex items-center justify-center transition-transform duration-300 translate-y-full 
-                  ${
-                    focused.budget.value === option
-                      ? "text-blue-800" // Если кнопка активна, текст сразу синий
-                      : "text-blue-800 group-hover:translate-y-0"
-                  }`}
-                  >
-                    {option}
-                  </span>
+                  {option}
                 </button>
               ))}
             </div>
@@ -280,20 +265,12 @@ const Contact = () => {
         </div>
       </div>
       {/* Способы связи */}
-      <div className="md:flex space-y-[10px] items-center mt-[60px] mb-[100px] md:mt-[120px] md:mb-[60px]">
+      <div className="flex items-center w-full mb-[60px] px-[40px] py-[20px] rounded-[10px] bg-white">
         {/* Левая часть */}
         <div className="flex items-center space-x-[10px] min-w-max">
           <p>You can contact me on</p>
-          <button className="relative px-[10px] py-[4px] border rounded-full transition-all duration-200 hover:border-green-600 overflow-hidden h-auto flex items-center justify-center group">
-            <p className="opacity-0 whitespace-nowrap"> Up Work</p>
-
-            <span className="absolute inset-0 flex items-center justify-center color-black transition-transform duration-300 group-hover:-translate-y-full">
-              Up Work
-            </span>
-
-            <span className="absolute inset-0 flex items-center justify-center color-green transition-transform duration-300 translate-y-full group-hover:translate-y-0">
-              Up Work
-            </span>
+          <button className="px-[12px] py-[6px] md:px-[10px] md:py-[4px] border rounded-full transition-all duration-200 border-blue-800 text-blue-800 hover:border-black hover:text-black">
+            Up Work
           </button>
         </div>
 
@@ -309,17 +286,9 @@ const Contact = () => {
           {contactMethods.map((method) => (
             <button
               key={method}
-              className="relative px-[12px] py-[6px] md:px-[10px] md:py-[4px] border rounded-full transition-all duration-200 hover:border-blue-800 overflow-hidden h-auto flex items-center justify-center group"
+              className="px-[12px] py-[6px] md:px-[10px] md:py-[4px] border rounded-full transition-all duration-200 hover:border-blue-800 hover:text-blue-800"
             >
-              <p className="opacity-0 whitespace-nowrap">{method}</p>
-
-              <span className="absolute inset-0 flex items-center justify-center color-black transition-transform duration-300 group-hover:-translate-y-full">
-                {method}
-              </span>
-
-              <span className="absolute inset-0 flex items-center justify-center color-blue transition-transform duration-300 translate-y-full group-hover:translate-y-0">
-                {method}
-              </span>
+              {method}
             </button>
           ))}
         </div>
@@ -328,4 +297,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default PopUp;

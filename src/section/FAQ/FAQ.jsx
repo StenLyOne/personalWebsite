@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FAQItem from "../../components/FAQItem/FAQItem";
 
 const faqData = [
@@ -29,16 +29,35 @@ const faqData = [
 ];
 
 const FAQ = () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [openFAQ, setOpenFAQ] = useState(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
-    <div  className="space-y-[30px] mt-[180px]">
-      <h2 className="uppercase">
-        Questions and <br />
-        Answers
-      </h2>
-      <div className="bg-bg py-[50px] px-[40px] flex flex-col rounded-[10px]">
+    <section className="space-y-[30px] mt-[100px] md:mt-[180px] md:mr-[30px]" id="faq">
+      {!isMobile ? (
+        <h2 className="uppercase">
+          Questions and <br />
+          Answers
+        </h2>
+      ) : (
+        <h2 className="uppercase px-[16px] md:px-[0px]">FAQ</h2>
+      )}
+      <div
+        className={`${
+          !isMobile ? "bg-bg" : ""
+        } md:py-[50px] px-[16px] md:px-[40px] flex flex-col rounded-[10px]`}
+      >
         {faqData.map((faq, index) => (
-          <div key={faq.id}>
+          <div key={faq.id} className="cursor-pointer">
             <FAQItem
               key={faq.id}
               id={faq.id}
@@ -53,7 +72,7 @@ const FAQ = () => {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 

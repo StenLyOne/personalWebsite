@@ -1,5 +1,6 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import AudioVisualizer from "../../components/AudioVisualizer/AudioVisualizer";
 
 const testimonials = [
   {
@@ -81,21 +82,52 @@ const Testimonials = () => {
   const sectionRef = useRef(null);
   const [currentAudio, setCurrentAudio] = useState(null);
   const [duration, setDuration] = useState({});
+  const [currentTime, setCurrentTime] = useState({});
   const audioRefs = useRef({});
+  const intervalRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, []);
 
   const handlePlay = (id) => {
-    if (currentAudio && currentAudio !== audioRefs.current[id]) {
-      currentAudio.pause();
-    }
-
     const audio = audioRefs.current[id];
     if (!audio) return;
+
+    // Если уже играет другое аудио - ставим его на паузу
+    if (currentAudio && currentAudio !== audio) {
+      currentAudio.pause();
+      clearInterval(intervalRef.current);
+    }
 
     if (audio.paused) {
       audio.play();
       setCurrentAudio(audio);
+
+      // Запускаем интервал для обновления времени
+      intervalRef.current = setInterval(() => {
+        setCurrentTime((prev) => ({
+          ...prev,
+          [id]: Math.floor(audio.currentTime),
+        }));
+      }, 1000);
     } else {
       audio.pause();
+      clearInterval(intervalRef.current);
       setCurrentAudio(null);
     }
   };
@@ -105,9 +137,22 @@ const Testimonials = () => {
     if (audio) {
       setDuration((prev) => ({
         ...prev,
-        [id]: Math.round(audio.duration), // Длительность в секундах
+        [id]: Math.floor(audio.duration),
+      }));
+      setCurrentTime((prev) => ({
+        ...prev,
+        [id]: 0,
       }));
     }
+  };
+
+  const handleEnded = (id) => {
+    setCurrentAudio(null);
+    clearInterval(intervalRef.current);
+    setCurrentTime((prev) => ({
+      ...prev,
+      [id]: 0,
+    }));
   };
 
   // Контролируем скролл внутри секции
@@ -141,44 +186,45 @@ const Testimonials = () => {
   ); // Исчезает
   const titleOpacity2 = useTransform(
     scrollYProgress,
-    [0.5, 0.6, 0.8, 1],
-    [0, 0.6, 1, 0.1]
+    [0.5, 0.6, 0.8],
+    [0, 1, 0.1]
   ); // Появляется
   const titleY1 = useTransform(scrollYProgress, [0.4, 0.5], ["0%", "-50%"]); // Уходит вверх
   const titleY2 = useTransform(scrollYProgress, [0.5, 0.6], ["50%", "0%"]); // Появляется снизу
 
   return (
-    <section ref={sectionRef} className="relative h-[1000vh] ">
-      <div className="sticky inset-0 bottom-0 h-screen w-full flex items-center justify-center overflow-hidden  rounded-[10px]">
+    <section ref={sectionRef} className="relative h-[600vh]" id="testimonials">
+      <div className="sticky inset-0 bottom-0 h-screen w-full flex items-center justify-center overflow-hidden rounded-[10px]">
         {/* Блок фиксации, пока идет анимация */}
         <motion.div
-          className="sticky inset-0 bottom-0 h-screen w-full flex items-center justify-center overflow-hidden  rounded-[10px]"
+          className="sticky inset-0 bottom-0 h-screen w-full flex items-center justify-center overflow-hidden rounded-[10px]"
           style={{ backgroundColor: bgColor }}
         >
           {/* Заголовок */}
           <motion.h2
-            className="absolute top-1/2 left-1/2 text-white text-5xl font-bold -translate-x-1/2 -translate-y-1/2 text-center"
+            className="w-full absolute top-1/2 left-1/2 text-white text-5xl font-bold -translate-x-1/2 -translate-y-1/2 text-center"
             style={{
               opacity: titleOpacity1,
               y: titleY1,
               color: scrollYProgress,
             }}
           >
-            WHAT MY CLIENTS SAY
+            WHAT MY <br />
+            CLIENTS SAY
           </motion.h2>
 
           {/* Второй заголовок */}
           <motion.h2
-            className="absolute top-1/2 left-1/2 text-black text-5xl font-bold -translate-x-1/2 -translate-y-1/2 text-center"
+            className="w-full absolute top-1/2 left-1/2 text-black text-5xl font-bold -translate-x-1/2 -translate-y-1/2 text-center"
             style={{ opacity: titleOpacity2, y: titleY2 }}
           >
-            WHAT SERVICES DO I PROVIDE?
+            WHAT SERVICES <br /> DO I PROVIDE?
           </motion.h2>
 
           {/* Горизонтальный скролл отзывов */}
           <motion.div
-            className="absolute w-full h-full flex items-center space-x-10 px-10"
-            style={{ x: xTransformTestimonials }}
+            className="absolute w-full left-[0px] h-full flex items-center space-x-10 px-10"
+            style={isMobile ? { y: xTransformTestimonials } : { x: xTransformTestimonials }}
           >
             {testimonials.map((testimonial) => (
               <div
@@ -207,9 +253,10 @@ const Testimonials = () => {
                         onLoadedMetadata={() =>
                           handleLoadedMetadata(testimonial.id)
                         }
+                        onEnded={() => handleEnded(testimonial.id)}
                       />
                       <button
-                        className="absolute "
+                        className="absolute"
                         onClick={() => handlePlay(testimonial.id)}
                       >
                         <img
@@ -229,18 +276,19 @@ const Testimonials = () => {
                   </div>
                   <div className="flex items-center gap-[5px]">
                     <span>
-                      <img
-                        src={
+                      <AudioVisualizer
+                        isPlaying={
                           currentAudio === audioRefs.current[testimonial.id]
-                            ? "src/assets/img/sound.svg"
-                            : "src/assets/img/sound2.svg"
                         }
-                        alt=""
                       />
                     </span>
                     {duration[testimonial.id] && (
                       <p className="color-blue">
-                        00:{duration[testimonial.id]}
+                        00:
+                        {String(
+                          duration[testimonial.id] -
+                            (currentTime[testimonial.id] || 0)
+                        ).padStart(2, "0")}
                       </p>
                     )}
                   </div>
@@ -251,6 +299,7 @@ const Testimonials = () => {
           <motion.div
             className="absolute left-[0px] w-full h-[200%] flex items-center space-x-10 px-10"
             style={{ y: xTransformServices }}
+            id="services"
           >
             {services.map((service) => (
               <div

@@ -69,11 +69,14 @@ const Works = () => {
   const [showCard, setShowCard] = useState(null);
 
   return (
-    <section className="pr-[30px] pb-[180px] md:pt-[90px] pb-[80px]">
+    <section
+      className="md:pr-[30px] md:pb-[305px] md:pt-[90px] px-[16px] pb-[80px] space-y-[20px]"
+      id="cases"
+    >
       <div>
         <p>My works</p>
       </div>
-      <div className="grid grid-cols-2 gap-x-[20px] gap-y-[20px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 grid-rows-auto gap-x-[20px] gap-y-[80px] md:gap-y-[150px]">
         {worksData.map((works, index) => (
           <motion.div
             key={index}
@@ -83,44 +86,58 @@ const Works = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: index * 0.2 }}
             viewport={{ once: true, amount: 0.3 }}
-            className={` transition-shadow duration-300 rounded-[10px] h-auto${
-              index % 2 !== 0 ? "mt-[200px] " : ""
-            } ${showCard === index ? "card-shadow" : ""}`}
+            className={`transition-shadow duration-300 rounded-[10px] h-auto ${
+              index % 2 !== 0 ? "md:translate-y-[125px]" : ""
+            } ${
+              showCard === index ? "shadow-[0px_1px_50px_rgba(0,0,0,0.15)]" : ""
+            }`}
           >
-            <div>
-              <img
-                className="rounded-t-[10px]"
-                src={works.img}
-                alt={works.title}
-              />
-            </div>
-            <div className="relative pt-[10px] pl-[15px] pr-[15px] space-y-[20px]">
-              <div className=" space-y-[10px]">
-                <h3>{works.title}</h3>
-                <p>{works.description}</p>
+            <div className="relative overflow-hidden">
+              <div className="h-[355px] md:h-[355px] xl:h-auto">
+                <img
+                  className="rounded-t-[10px] w-full h-full object-cover"
+                  src={works.img}
+                  alt={works.title}
+                />
               </div>
               <div
-                className={`absolute top-full bg-white transition-opacity duration-200 w-full left-[0px] px-[15px] py-[20px] rounded-b-[10px] shadow-[0px_20px_12px_rgba(0,0,0,0.15)] ${
+                className={`color-white bg-blue absolute transition-all duration-300 w-full h-full left-[0px] px-[15px] py-[20px] flex flex-col items-start justify-center rounded-t-[10px] ${
                   showCard === index
-                    ? "bot-0 opacity-100"
-                    : "bot-full opacity-0"
-                }  space-y-[20px]`}
+                    ? "top-[0px] opacity-100"
+                    : "top-full opacity-100"
+                } space-y-[20px]`}
               >
                 <div className="space-y-[10px]">
-                  <h4>What i did:</h4>
+                  <h4>What I did:</h4>
                   <div className="space-y-[5px]">
                     {works.did.map((work, index) => (
-                      <p key={index}>{work}</p>
+                      <p key={index} className="flex items-start gap-[8px]">
+                        <span className="text-[14px]">●</span> {work}
+                      </p>
                     ))}
                   </div>
                 </div>
+
                 <div className="space-y-[10px]">
                   <h4>Results:</h4>
                   <div className="space-y-[5px]">
                     {works.results.map((result, index) => (
-                      <p key={index}>{result}</p>
+                      <p key={index} className="flex items-start gap-[8px]">
+                        <span className="text-[14px]">●</span> {result}
+                      </p>
                     ))}
                   </div>
+                </div>
+              </div>
+            </div>
+            <div className="relative p-[15px] space-y-[20px]">
+              <div className="space-y-[10px]">
+                <h3>{works.title}</h3>
+                <p>{works.description}</p>
+                <div className="flex justify-end">
+                  <a href={works.url}>
+                    <p className="color-blue font-12">(Go to website)</p>
+                  </a>
                 </div>
               </div>
             </div>
