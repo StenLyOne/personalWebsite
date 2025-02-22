@@ -17,15 +17,15 @@ function App() {
   }, [isOpen]);
 
   return (
-    <div className="bg-white flex flex-col md:flex-row w-auto relative">
-      <div className="w-full h-auto md:w-1/5 z-[1] ">
+    <div className="bg-white flex flex-col md:flex-row w-auto relative ">
+      <div className="w-full h-auto md:w-1/5 z-[6] md:z-[9] ">
         <Header />
       </div>
-      <div className="md:w-4/5 z-[9]">
-        <Main />
+      <div className="md:w-4/5 z-[5] md:z-[10]">
+        <Main setIsOpen={setIsOpen} />
         <Works />
         <Testimonials />
-        <About />
+        <About setIsOpen={setIsOpen} />
         <FAQ />
         <Contact />
       </div>
@@ -34,7 +34,7 @@ function App() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="fixed w-full h-screen inset-0 bg-black/90 z-[10] flex items-center justify-center"
+            className="fixed w-full h-screen inset-0 bg-[rgba(255,255,255,1)] md:bg-[rgba(0,0,0,0.75)] z-[10] flex items-center justify-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

@@ -1,9 +1,10 @@
 export default {
-    theme: {
-      extend: {
-        colors: {
-          blue: "var(--color-blue)", 
-        },
+  theme: {
+    extend: {
+      colors: {
+        black75: "rgb(0 0 0 / 75%)", // <-- Исправленный вариант
       },
     },
-  };
+  },
+  plugins: [],
+};

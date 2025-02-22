@@ -41,7 +41,7 @@ const FAQItem = ({ id, question, answer, isOpen, setOpen }) => {
                 className={`relative transform transition-all duration-300 ${
                   isOpen === id
                     ? "top-[-100%]" // Если вопрос открыт, кнопка остается активной
-                    : activ === id
+                    : activ  === id && !isMobile
                     ? "top-[-100%]" // Если навели мышку, тоже активная
                     : "top-[0%]" // В остальных случаях - стандартное положение
                 }`}
@@ -64,7 +64,7 @@ const FAQItem = ({ id, question, answer, isOpen, setOpen }) => {
         </div>
       </div>
       <motion.div
-        className="overflow-hidden md:ml-[0px] md:ml-[133.5px] max-w-[500px]"
+        className="overflow-hidden md:ml-[0px] md:ml-[133.5px] max-w-[85%] md:max-w-[700px]"
         initial={{ height: 0, opacity: 0 }}
         animate={{
           height: isOpen === id ? "auto" : 0,

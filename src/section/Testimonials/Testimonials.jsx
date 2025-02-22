@@ -8,78 +8,90 @@ const testimonials = [
     img: "src/assets/img/I.png",
     name: "John Doe",
     company: "Tech Inc.",
-    text: "Awesome work!",
     title: "Short title",
-    position: "top-10 left-10",
-    path: "src/assets/testimonials/testimonials1.ogg",
+    position: "bottom-4/8 left-20",
+    positionMob: "top-10 left-3",
+    path: "src/assets/testimonials/testimonials1.mp3",
   },
   {
     id: 2,
     img: "src/assets/img/I.png",
     name: "Jane Smith",
     company: "Startup X",
-    text: "Highly recommend!",
     title: "Short title",
-    position: "bottom-1/5 left-20",
-    path: "src/assets/testimonials/testimonials1.ogg",
+    position: "bottom-4/5 left-3/6",
+    positionMob: "top-50 right-3",
+    path: "src/assets/testimonials/testimonials1.mp3",
   },
   {
     id: 3,
-    img: "src/assets/img/I.png",
-    name: "Alice Johnson",
+    img: "src/assets/img/Tomas.png",
+    name: "Tomas Petrauskas",
     company: "E-Shop",
-    text: "Amazing results!",
     title: "Short title",
-    position: "bottom-1/4 left-1/2",
-    path: "src/assets/testimonials/testimonials1.ogg",
+    position: "bottom-3/10 right-1/5",
+    positionMob: "bottom-1/3 left-1/3",
+    path: "src/assets/testimonials/Tomas.mp3",
   },
   {
     id: 4,
-    img: "src/assets/img/I.png",
-    name: "Bob Brown",
+    img: "src/assets/img/Kseniya.png",
+    name: "Kseniya Polyachenok",
     company: "Finance Pro",
-    text: "Top-notch service!",
     title: "Short title",
-    position: "bottom-10 right-10",
-    path: "src/assets/testimonials/testimonials1.ogg",
+    position: "top-8/10 left-3/3",
+    positionMob: "top-4/5 left-1/5",
+    path: "src/assets/testimonials/Kseniya.mp3",
+    text: "I previously worked with an agency, and honestly, it was exhausting—slow responses, endless meetings, and unnecessary delays. But working with Vlad was complete opposite! Everything was structured and clear from the start. He always kept me updated, understood exactly what I wanted, and the final result turned out even better than I expected. If you’re tired of wasting time and just want a great website without hassle, Vlad is the right guy!",
   },
 ];
 
 const services = [
   {
     id: 1,
-    title: "Landing",
+    title: "LANDING",
     terms: "4 days+",
     description:
-      "We make websites for any task: a product page, a special project, a promo or an online store. Nocode and speed",
+      "I create landing pages for any purpose: a product, a promo, an event, or a special project. Designed to convert and engage your audience.",
     priceDesign: "300$",
     priceDesignDev: "500$",
     position: "top-0 left-10",
   },
   {
     id: 2,
-    title: "Multi-page website",
-    terms: "5 days+",
+    title: "E-COMMERCE",
+    terms: "7 days+",
     description:
-      "We make websites for any task: a product page, a special project, a promo or an online store. Nocode and speed",
-    priceDesign: "300$",
-    priceDesignDev: "500$",
+      "Online stores built for growth. A smooth user experience, easy checkout, and scalable design for any business.",
+    priceDesign: "500$",
+    priceDesignDev: "800$",
     position: "top-1/3 right-0",
   },
   {
     id: 3,
-    title: "Branding",
+    title: "CORPORATE WEBSITE",
     terms: "4 days+",
     description:
-      "We make websites for any task: a product page, a special project, a promo or an online store. Nocode and speed",
-    priceDesign: "300$",
-    priceDesignDev: "500$",
+      "Professional websites for companies that need a strong digital presence. Structured, informative, and built to impress.",
+    priceDesign: "400$",
+    priceDesignDev: "700$",
     position: "bottom-10 left-10",
+  },
+  {
+    id: 4,
+    title: "MULTI-PAGE PLATFORM",
+    terms: "10 days+",
+    description:
+      " Custom-built platforms with multiple pages, deep UX optimization, and seamless functionality for complex projects.",
+    priceDesign: "700$",
+    priceDesignDev: "1200$",
+    position: "bottom-0 right-10",
   },
 ];
 
 const Testimonials = () => {
   const sectionRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(null);
   const [currentAudio, setCurrentAudio] = useState(null);
   const [duration, setDuration] = useState({});
   const [currentTime, setCurrentTime] = useState({});
@@ -165,7 +177,7 @@ const Testimonials = () => {
   const xTransformTestimonials = useTransform(
     scrollYProgress,
     [0, 0.5],
-    ["100%", "-100%"]
+    ["100%", "-130%"]
   );
   const xTransformServices = useTransform(
     scrollYProgress,
@@ -223,16 +235,22 @@ const Testimonials = () => {
 
           {/* Горизонтальный скролл отзывов */}
           <motion.div
-            className="absolute w-full left-[0px] h-full flex items-center space-x-10 px-10"
-            style={isMobile ? { y: xTransformTestimonials } : { x: xTransformTestimonials }}
+            className="absolute w-full left-[0px] h-full flex items-center space-x-[16px] md:space-x-[0px] px-10"
+            style={
+              isMobile
+                ? { y: xTransformTestimonials }
+                : { x: xTransformTestimonials }
+            }
           >
             {testimonials.map((testimonial) => (
               <div
                 key={testimonial.id}
-                className={`absolute rounded-lg space-y-[10px] ${testimonial.position}`}
+                className={`absolute rounded-lg space-y-[10px] ${
+                  !isMobile ? testimonial.position : testimonial.positionMob
+                }`}
               >
                 <div className="flex items-center gap-[8px]">
-                  <div className="w-[60px] h-[60px] rounded-[100px] border border-white">
+                  <div className="w-[60px] h-[60px] rounded-[100px] border border-white overflow-hidden">
                     <img src={testimonial.img} alt="" />
                   </div>
                   <div className="space-y-2">
@@ -244,67 +262,91 @@ const Testimonials = () => {
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center justify-between w-[231px] bg-white py-[9px] px-[14px] rounded-[10px]">
-                  <div className="flex items-center gap-[10px]">
-                    <div className="relative w-[12px] h-[12px]">
-                      <audio
-                        ref={(el) => (audioRefs.current[testimonial.id] = el)}
-                        src={testimonial.path}
-                        onLoadedMetadata={() =>
-                          handleLoadedMetadata(testimonial.id)
-                        }
-                        onEnded={() => handleEnded(testimonial.id)}
-                      />
-                      <button
-                        className="absolute"
-                        onClick={() => handlePlay(testimonial.id)}
-                      >
-                        <img
-                          className="w-[12px] h-[12px]"
-                          src={
-                            currentAudio === audioRefs.current[testimonial.id]
-                              ? "src/assets/img/pause.svg"
-                              : "src/assets/img/play.svg"
+                <div className="flex gap-[0px]">
+                  <div className="flex items-center justify-between w-[231px] bg-white py-[9px] pl-[7px] pr-[14px] rounded-[10px]">
+                    <div className="flex items-center gap-[5px]">
+                      <div className="relative w-[24px] h-[24px] flex items-center justify-center">
+                        <audio
+                          ref={(el) => (audioRefs.current[testimonial.id] = el)}
+                          src={testimonial.path}
+                          onLoadedMetadata={() =>
+                            handleLoadedMetadata(testimonial.id)
                           }
-                          alt=""
+                          onEnded={() => handleEnded(testimonial.id)}
                         />
-                      </button>
+                        <button
+                          className=" w-[24px] h-[24px] flex items-center justify-center"
+                          onClick={() => handlePlay(testimonial.id)}
+                        >
+                          <img
+                            className="w-[12px] h-[12px]"
+                            src={
+                              currentAudio === audioRefs.current[testimonial.id]
+                                ? "src/assets/img/pause.svg"
+                                : "src/assets/img/play.svg"
+                            }
+                            alt=""
+                          />
+                        </button>
+                      </div>
+                      <div>
+                        <p className="color-blue">Short title</p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="color-blue">Short title</p>
+                    <div className="flex items-center gap-[5px]">
+                      <span>
+                        <AudioVisualizer
+                          isPlaying={
+                            currentAudio === audioRefs.current[testimonial.id]
+                          }
+                        />
+                      </span>
+                      {duration[testimonial.id] && (
+                        <p className="color-blue">
+                          00:
+                          {String(
+                            duration[testimonial.id] -
+                              (currentTime[testimonial.id] || 0)
+                          ).padStart(2, "0")}
+                        </p>
+                      )}
                     </div>
                   </div>
-                  <div className="flex items-center gap-[5px]">
-                    <span>
-                      <AudioVisualizer
-                        isPlaying={
-                          currentAudio === audioRefs.current[testimonial.id]
-                        }
+                  <div
+                    className="p-[14px] bg-white rounded-[10px] relative cursor-pointer"
+                    onMouseEnter={() => setIsOpen(testimonial.id)}
+                    onMouseLeave={() => setIsOpen(null)}
+                  >
+                    <img src="src/assets/img/A.svg" alt="" />
+                    <div
+                      className={`absolute bg-white p-[16px] rounded-[10px] color-blue min-w-[280px] bottom-[130%] left-[-12%] ${
+                        isOpen === testimonial.id ? "" : "hidden"
+                      }`}
+                    >
+                      <p>{testimonial.text}</p>
+                      <img
+                        src="src\assets\img\vector.svg"
+                        alt=""
+                        className="absolute bottom-[-9px]"
                       />
-                    </span>
-                    {duration[testimonial.id] && (
-                      <p className="color-blue">
-                        00:
-                        {String(
-                          duration[testimonial.id] -
-                            (currentTime[testimonial.id] || 0)
-                        ).padStart(2, "0")}
-                      </p>
-                    )}
+                    </div>
                   </div>
                 </div>
               </div>
             ))}
           </motion.div>
           <motion.div
-            className="absolute left-[0px] w-full h-[200%] flex items-center space-x-10 px-10"
+            className="absolute left-[0px] w-full h-[200%] md:flex items-center space-y-[140px] md:space-x-10 px-[16px] md:px-10"
             style={{ y: xTransformServices }}
             id="services"
           >
             {services.map((service) => (
               <div
                 key={service.id}
-                className={`flex flex-col justify-between absolute bg-blue p-[30px] rounded-lg shadow-lg max-w-[340px] w-[100%] max-h-[424px] h-[100%] ${service.position}`}
+                className={`flex flex-col justify-between md:absolute bg-blue p-[30px] rounded-lg shadow-lg max-w-[340px] w-[100%] max-h-[424px] h-[100%]
+                  ${service.position}
+                ${isMobile && service.id % 2 === 0 ? "ml-auto" : ""}
+                `}
               >
                 <div className="flex items-center justify-between">
                   <div className="bg-white rounded-[10px] py-[4px] px-[10px]">
@@ -316,7 +358,7 @@ const Testimonials = () => {
                     <p className="font-medium">
                       <span className="color-white">0{service.id}</span>
                       <span style={{ color: "#707BDA" }}>
-                        / 0{services.length + 1}
+                        / 0{services.length}
                       </span>
                     </p>
                   </div>

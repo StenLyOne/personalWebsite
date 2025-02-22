@@ -1,6 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Button from "../../components/Button/Button";
 
 const Contact = () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const [focused, setFocused] = useState({
     name: { value: "", bullet: false },
     contact: { value: "", bullet: false },
@@ -56,8 +68,13 @@ const Contact = () => {
 
   return (
     <section className="mx-[16px] md:mx-[0px] md:mr-[30px]">
-      <div className="max-w-[800px] mx-auto mt-[100px] md:mt-[180px] mb-[90px]" id="contact">
-        <h2 className="text-5xl font-bold text-start md:text-center mb-[40px] md:mb-[100px]">CONTACT</h2>
+      <div
+        className="max-w-[800px] mx-auto mt-[100px] md:mt-[180px] mb-[90px]"
+        id="contact"
+      >
+        <h2 className="text-5xl font-bold text-start md:text-center mb-[40px] md:mb-[100px]">
+          CONTACT
+        </h2>
 
         <div>
           {/* Поля ввода */}
@@ -198,7 +215,15 @@ const Contact = () => {
             <h4 className="text-lg font-medium mb-[10px]">
               Choose your budget:
             </h4>
-            <div className="flex">
+            <div
+              className="pb-[20px] md:pb-[0px] flex max-[520px]:overflow-x-scroll whitespace-nowrap scrollbar-show"
+              style={{
+                scrollbarWidth: "thin" /* Firefox */,
+                scrollbarColor:
+                  "#1E2EB8 #E8EDF6" /* ползунок (синий) и фон (светлый) */,
+                scrollbarGutter: "stable",
+              }}
+            >
               {budgetOptions.map((option) => (
                 <button
                   key={option}
@@ -208,7 +233,7 @@ const Contact = () => {
                       budget: { value: option },
                     }))
                   }
-                  className={`relative px-[12px] py-[6px] md:px-[10px] md:py-[4px] border rounded-full transition-all duration-200 overflow-hidden flex items-center justify-center group 
+                  className={`relative  px-[12px] py-[6px] md:px-[10px] md:py-[4px] border rounded-full transition-all duration-200 md:overflow-hidden flex items-center justify-center group 
                 ${
                   focused.budget.value === option
                     ? "border-blue-800 text-blue-800 font-semibold"
@@ -216,31 +241,44 @@ const Contact = () => {
                 }`}
                 >
                   {/* Невидимый текст для фиксации размера */}
-                  <p className="opacity-0 whitespace-nowrap">{option}</p>
+                  <p
+                    className={` ${
+                      !isMobile ? "opacity-0 whitespace-nowrap" : ""
+                    } ${
+                      focused.budget.value === option
+                        ? "color-blue font-semibold"
+                        : "color-black font-semibold"
+                    }`}
+                  >
+                    {option}
+                  </p>
 
                   {/* Черный текст (уходит вверх при ховере) */}
-                  <span
-                    className={`absolute inset-0 flex items-center justify-center transition-transform duration-300 
+                  {!isMobile && (
+                    <>
+                      <span
+                        className={`absolute inset-0 flex items-center justify-center transition-transform duration-300 
                   ${
                     focused.budget.value === option
                       ? "text-blue-800" // Если кнопка активна, текст сразу синий
                       : "text-black group-hover:-translate-y-full"
                   }`}
-                  >
-                    {option}
-                  </span>
+                      >
+                        {option}
+                      </span>
 
-                  {/* Синий текст (поднимается снизу при ховере) */}
-                  <span
-                    className={`absolute inset-0 flex items-center justify-center transition-transform duration-300 translate-y-full 
+                      <span
+                        className={`absolute inset-0 flex items-center justify-center transition-transform duration-300 translate-y-full 
                   ${
                     focused.budget.value === option
                       ? "text-blue-800" // Если кнопка активна, текст сразу синий
                       : "text-blue-800 group-hover:translate-y-0"
                   }`}
-                  >
-                    {option}
-                  </span>
+                      >
+                        {option}
+                      </span>
+                    </>
+                  )}
                 </button>
               ))}
             </div>
@@ -271,23 +309,20 @@ const Contact = () => {
           </div>
 
           {/* Кнопка */}
-          <button
-            onClick={handleSubmit}
-            className="bg-blue text-white px-[26px] py-[9px] rounded-[10px]"
-          >
-            Contact us
-          </button>
+          <div onClick={handleSubmit}>
+            <Button>Contact us</Button>
+          </div>
         </div>
       </div>
       {/* Способы связи */}
-      <div className="md:flex space-y-[10px] items-center mt-[60px] mb-[100px] md:mt-[120px] md:mb-[60px]">
+      <div className="md:flex  items-center mt-[60px] mb-[100px] md:mt-[120px] md:mb-[60px]">
         {/* Левая часть */}
         <div className="flex items-center space-x-[10px] min-w-max">
           <p>You can contact me on</p>
-          <button className="relative px-[10px] py-[4px] border rounded-full transition-all duration-200 hover:border-green-600 overflow-hidden h-auto flex items-center justify-center group">
+          <button className="relative px-[10px] py-[4px] border rounded-full transition-all duration-200 border-green-600 overflow-hidden h-auto flex items-center justify-center group">
             <p className="opacity-0 whitespace-nowrap"> Up Work</p>
 
-            <span className="absolute inset-0 flex items-center justify-center color-black transition-transform duration-300 group-hover:-translate-y-full">
+            <span className="absolute inset-0 color-green flex items-center justify-center color-black transition-transform duration-300 group-hover:-translate-y-full">
               Up Work
             </span>
 

@@ -46,15 +46,15 @@ const Main = ({ setIsOpen }) => {
                 <h1 className="uppercase">become market leaders.</h1> */}
                 <h1 className="uppercase">
                   I create websites for
-                  <br className="h1-mob lg:block md:hidden sm:hidden" />
+                  <br className="h1-mob hidden lg:block md:hidden sm:hidden" />
                   businesses that help to
-                  <br className="h1-mob lg:block md:hidden sm:hidden" />
+                  <br className="h1-mob hidden lg:block md:hidden sm:hidden" />
                   become market leaders.
                 </h1>
               </div>
               <div className="flex gap-[5px]">
                 <div onClick={() => setIsOpen(true)}>
-                  <Button>Get a website that works as a business tool</Button>
+                  <Button>Let’s craft your perfect website</Button>
                 </div>
                 <button
                   onClick={() => handleSmoothScroll("cases")}

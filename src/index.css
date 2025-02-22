@@ -70,6 +70,10 @@
   background-color: var(--color-black);
 }
 
+.bg-black75 {
+  background: rgba(0, 0, 0, 0.75);
+}
+
 .color-stroke {
   color: var(--color-stroke);
 }
@@ -215,6 +219,13 @@ li {
   text-shadow: 0 -1.2em #fff, 0 0 #fff;
 }
 
+.header-link {
+  font-size: 14px !important;
+  line-height: 18px !important;
+  letter-spacing: -0.4px !important;
+  font-weight: 600 !important;
+}
+
 @media (max-width: 1200px) {
   h1 {
     font-size: 65px;
@@ -227,12 +238,13 @@ li {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   h1 {
     font-size: 35px;
     line-height: 33px;
     letter-spacing: -1.9px;
     font-weight: 600;
+    text-wrap-style: balance;
   }
 
   h2 {
@@ -247,5 +259,12 @@ li {
     line-height: 33px;
     letter-spacing: -1.9px;
     font-weight: 600;
+  }
+
+  .header-link {
+    font-size: 30px !important;
+    line-height: 33px !important;
+    letter-spacing: -1.9px !important;
+    font-weight: 600 !important;
   }
 }
